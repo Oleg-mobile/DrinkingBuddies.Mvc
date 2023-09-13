@@ -1,0 +1,11 @@
+﻿@using DrinkingBuddies.Domain.Models;
+@model IEnumerable<Member>
+
+	<div>
+		@foreach (Member member in Model)
+		{
+			<div>
+			@($"Id - {member.Id}, name - {member.Name}")
+		</div>
+		}
+</div>

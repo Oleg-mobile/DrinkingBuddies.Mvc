@@ -14,7 +14,9 @@ namespace DrinkingBuddies.Domain.Repositories
 
 		public async Task AddAsync(Member input)
 		{
-			await _context.Members.AddAsync(input);
+            // TODO проверка на контроллере
+
+            await _context.Members.AddAsync(input);
 			await _context.SaveChangesAsync();
 		}
 
@@ -24,7 +26,7 @@ namespace DrinkingBuddies.Domain.Repositories
 
 			if (member is null)
 			{
-				// exeption
+				// TODO exeption
 				return;
 			}
 

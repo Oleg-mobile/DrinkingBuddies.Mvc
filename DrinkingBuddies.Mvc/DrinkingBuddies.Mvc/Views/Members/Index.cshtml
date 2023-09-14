@@ -1,8 +1,8 @@
-﻿@using DrinkingBuddies.Domain.Models;
-@model IEnumerable<Member>
+﻿@using DrinkingBuddies.Mvc.Services.Members.Dto;
+@model IEnumerable<MemberDto>
 
 	<div>
-		@foreach (Member member in Model)
+		@foreach (MemberDto member in Model)
 		{
 			<div>
 			@($"Id - {member.Id}, name - {member.Name}")

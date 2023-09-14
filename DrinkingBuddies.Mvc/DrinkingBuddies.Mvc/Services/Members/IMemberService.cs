@@ -4,6 +4,6 @@ namespace DrinkingBuddies.Mvc.Services.Members
 {
     public interface IMemberService
     {
-        MemberDto GetAsync();
+        Task<IEnumerable<MemberDto>> GetAsync();
     }
 }

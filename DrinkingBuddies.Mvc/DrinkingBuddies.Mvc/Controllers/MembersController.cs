@@ -14,5 +14,11 @@ namespace DrinkingBuddies.Mvc.Controllers
 
         public async Task<IActionResult> GetAsync() =>
             View("Index", await _service.GetAsync());
+
+        public async Task DeleteAsync(int id)
+        {
+            await _service.DeleteAsync(id);
+            RedirectToAction("Index");
+        }
     }
 }

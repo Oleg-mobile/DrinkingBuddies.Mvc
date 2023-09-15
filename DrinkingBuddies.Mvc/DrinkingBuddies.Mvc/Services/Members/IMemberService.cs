@@ -5,5 +5,6 @@ namespace DrinkingBuddies.Mvc.Services.Members
     public interface IMemberService
     {
         Task<IEnumerable<MemberDto>> GetAsync();
+        Task DeleteAsync(int id);
     }
 }

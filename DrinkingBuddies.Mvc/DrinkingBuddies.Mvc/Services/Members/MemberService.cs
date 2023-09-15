@@ -13,5 +13,8 @@ namespace DrinkingBuddies.Mvc.Services.Members
 
         public async Task<IEnumerable<MemberDto>> GetAsync() =>
             Mapper.Map<IEnumerable<MemberDto>>(await Repository.GetAsync());
+
+        public async Task DeleteAsync(int id) =>
+            await Repository.DeleteAsync(id);
     }
 }

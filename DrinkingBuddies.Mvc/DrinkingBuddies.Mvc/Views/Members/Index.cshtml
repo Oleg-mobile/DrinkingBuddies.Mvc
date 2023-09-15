@@ -1,11 +1,17 @@
 ﻿@using DrinkingBuddies.Mvc.Services.Members.Dto;
 @model IEnumerable<MemberDto>
 
-	<div>
+	<table>
 		@foreach (MemberDto member in Model)
 		{
-			<div>
-			@($"Id - {member.Id}, name - {member.Name}")
-		</div>
+			<tr>
+				<td>@($"Имя - {member.Name}")</td>
+				<td>
+					<form asp-controller="Members" asp-action="Delete" method="post" asp-route-id="@member.Id">
+						<input type="submit" value="Удалить" />
+					</form>
+				</td>
+
+			</tr>
 		}
-</div>
+</table>

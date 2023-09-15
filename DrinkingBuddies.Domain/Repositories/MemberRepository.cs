@@ -3,48 +3,45 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DrinkingBuddies.Domain.Repositories
 {
-	public class MemberRepository : IRepository<Member>
-	{
-		private readonly DrinkingBuddiesContext _context;
+    public class MemberRepository : IRepository<Member>
+    {
+        private readonly DrinkingBuddiesContext _context;
 
-		public MemberRepository(DrinkingBuddiesContext context)
-		{
-			_context = context;
-		}
+        public MemberRepository(DrinkingBuddiesContext context)
+        {
+            _context = context;
+        }
 
-		public async Task AddAsync(Member input)
-		{
+        public async Task AddAsync(Member input)
+        {
             // TODO проверка на контроллере
 
             await _context.Members.AddAsync(input);
-			await _context.SaveChangesAsync();
-		}
+            await _context.SaveChangesAsync();
+        }
 
-		public async Task DeleteAsync(int id)
-		{
-			var member = await _context.Members.FindAsync(id);
+        public async Task DeleteAsync(int id)
+        {
+            var member = await _context.Members.FindAsync(id);
 
-			if (member is null)
-			{
-				// TODO exeption
-				return;
-			}
+            if (member is null)
+            {
+                // TODO exeption
+                return;
+            }
 
-			_context.Members.Remove(member);
-			await _context.SaveChangesAsync();
-		}
+            _context.Members.Remove(member);
+            await _context.SaveChangesAsync();
+        }
 
-		public async Task<IEnumerable<Member>> GetAsync() => await _context.Members.ToListAsync();
+        public async Task<IEnumerable<Member>> GetAsync() => 
+            await _context.Members.ToListAsync();
 
 
-		public async Task<IEnumerable<Member>> GetByIdAsync(int id)  // ToDo IQueryable и async
-		{
-			IQueryable<Member> query = _context.Members;
+        public async Task<Member> GetByIdAsync(int id) =>
+            await _context.Members.FindAsync(id);
 
-			query = query.Where(member => member.Id == id);
-			var members = await query.ToListAsync();
-
-			return members;
-		}
-	}
+        public async Task<Member> GetByAccountAsync(string login, string password) => 
+            await _context.Members.FirstAsync(member => member.Name == login.Trim() && member.Password == password);
+    }
 }

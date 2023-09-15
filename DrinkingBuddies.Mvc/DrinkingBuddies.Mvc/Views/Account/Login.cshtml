@@ -10,18 +10,22 @@
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css">
 </head>
 <body>
-    <div>
+    <form asp-controller="Account" asp-action="Login" method="post">
         <div>
             <label>Логин</label>
-            <input type="text" placeholder="Введите логин">
+            <input type="text" name = "login" placeholder="Введите логин">
         </div>
         <div>
             <label>Пароль</label>
-            <input type="password" placeholder="Введите пароль">
+            <input type="password" name="password" placeholder="Введите пароль">
+        </div>
+        <div>
+            <input type="checkbox">
+            Администратор
         </div>
         <div>
             <button type="submit">Войти</button>
         </div>
-    </div>
+    </form>
 </body>
 </html>

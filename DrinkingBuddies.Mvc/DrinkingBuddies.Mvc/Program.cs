@@ -1,6 +1,7 @@
 using DrinkingBuddies.Domain;
 using DrinkingBuddies.Domain.Models;
 using DrinkingBuddies.Domain.Repositories;
+using DrinkingBuddies.Mvc.Services.Accounts;
 using DrinkingBuddies.Mvc.Services.Members;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,8 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IRepository<Member>, MemberRepository>();  // ¬недрение зависимости (где используетс€ это интерфейс, будет подт€гиватьс€ эта реализаци€)
 builder.Services.AddTransient<IMemberService, MemberService>();
+builder.Services.AddTransient<IAccountService, AccountService>();
 builder.Services.AddDbContext<DrinkingBuddiesContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
-builder.Services.AddAutoMapper(typeof (Program));
+builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 
@@ -18,8 +20,8 @@ var app = builder.Build();
 
 app.UseRouting();
 app.MapControllerRoute(
-	name: "default",
-	pattern: "{controller=Home}/{action=Index}/{id?}");
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.UseHttpsRedirection();
 

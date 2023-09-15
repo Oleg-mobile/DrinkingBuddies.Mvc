@@ -43,5 +43,11 @@ namespace DrinkingBuddies.Domain.Repositories
 
         public async Task<Member> GetByAccountAsync(string login, string password) => 
             await _context.Members.FirstAsync(member => member.Name == login.Trim() && member.Password == password);
+
+        public async Task<bool> CheckForExistAsync(string key) => 
+            await _context.Members.AnyAsync(m => m.Name == key.Trim());
+
+        public async Task<int> GetElementCountAsync() => 
+            await _context.Members.CountAsync();
     }
 }

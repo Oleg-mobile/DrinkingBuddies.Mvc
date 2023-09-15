@@ -1,4 +1,5 @@
 ﻿using DrinkingBuddies.Mvc.Services.Accounts;
+using DrinkingBuddies.Mvc.Services.Accounts.Dto;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DrinkingBuddies.Mvc.Controllers
@@ -35,6 +36,36 @@ namespace DrinkingBuddies.Mvc.Controllers
             {
                 return View();
             }
+        }
+
+        public IActionResult Register() 
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(string login, string password, string description, bool isAdmin)
+        {
+            var isExist = await _accountService.CheckForExistAsync(login);
+            var count = await _accountService.GetElementCountAsync();
+
+            if (count < 3)
+            {
+                if (!isExist)
+                {
+                    AddDto addDto = new AddDto
+                    {
+                        Name = login,
+                        Password = password,
+                        Description = description,
+                        IsAdmin = isAdmin
+                    };
+
+                    await _accountService.AddAsync(addDto);
+                }
+            }
+
+            return View();
         }
     }
 }

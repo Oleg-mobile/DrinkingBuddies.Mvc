@@ -21,7 +21,7 @@ var app = builder.Build();
 app.UseRouting();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Account}/{action=Register}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.UseHttpsRedirection();
 

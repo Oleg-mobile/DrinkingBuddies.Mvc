@@ -8,5 +8,11 @@ namespace DrinkingBuddies.Mvc.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public IActionResult Inter()
+        {
+            return RedirectToAction("Register", "Account");
+        }
     }
 }

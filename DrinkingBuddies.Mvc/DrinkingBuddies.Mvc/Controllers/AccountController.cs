@@ -65,7 +65,7 @@ namespace DrinkingBuddies.Mvc.Controllers
                 }
             }
 
-            return View();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

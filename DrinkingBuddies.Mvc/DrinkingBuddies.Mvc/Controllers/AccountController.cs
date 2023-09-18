@@ -1,7 +1,9 @@
 ﻿using DrinkingBuddies.Mvc.Services;
 using DrinkingBuddies.Mvc.Services.Accounts;
 using DrinkingBuddies.Mvc.Services.Accounts.Dto;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace DrinkingBuddies.Mvc.Controllers
 {
@@ -31,6 +33,11 @@ namespace DrinkingBuddies.Mvc.Controllers
 
             if (member is not null && member.Password.Equals(PasswordEncryption.EncodePassword(password, member.Salt)))
             {
+                var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+                identity.AddClaim(new Claim(ClaimTypes.Name, login));
+
+                // 
+
                 return RedirectToAction("Get", "Members");
             }
             else
@@ -48,11 +55,12 @@ namespace DrinkingBuddies.Mvc.Controllers
         public async Task<IActionResult> Register(string login, string password, string description, bool isAdmin)
         {
             var member = await _accountService.GetMemberAsync(login);
-            var members = await _accountService.GetAsync();  // TODO или получать количество от репозитория?
 
-            if (members.Count() < 3)
+            if (member is null)
             {
-                if (member is null)
+				var members = await _accountService.GetAsync();  // TODO или получать количество от репозитория?
+
+				if (members.Count() < 3)
                 {
                     var salt = PasswordEncryption.GenerateSalt();
 

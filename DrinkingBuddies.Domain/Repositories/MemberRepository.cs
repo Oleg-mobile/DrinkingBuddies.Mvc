@@ -37,17 +37,10 @@ namespace DrinkingBuddies.Domain.Repositories
         public async Task<IEnumerable<Member>> GetAsync() => 
             await _context.Members.ToListAsync();
 
-
         public async Task<Member> GetByIdAsync(int id) =>
             await _context.Members.FindAsync(id);
 
-        public async Task<Member> GetByAccountAsync(string login, string password) => 
-            await _context.Members.FirstAsync(member => member.Name == login.Trim() && member.Password == password);
-
-        public async Task<bool> CheckForExistAsync(string key) => 
-            await _context.Members.AnyAsync(m => m.Name == key.Trim());
-
-        public async Task<int> GetElementCountAsync() => 
-            await _context.Members.CountAsync();
+        public async Task<Member> GetByNameAsync(string login) => 
+            await _context.Members.FirstOrDefaultAsync(member => member.Name == login.Trim());
     }
 }

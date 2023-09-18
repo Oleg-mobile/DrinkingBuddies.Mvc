@@ -1,4 +1,5 @@
-﻿using DrinkingBuddies.Mvc.Services.Accounts;
+﻿using DrinkingBuddies.Mvc.Services;
+using DrinkingBuddies.Mvc.Services.Accounts;
 using DrinkingBuddies.Mvc.Services.Accounts.Dto;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,9 +27,9 @@ namespace DrinkingBuddies.Mvc.Controllers
                 return RedirectToAction("Login");
             }
 
-            var member = await _accountService.GetMemberAsync(login, password);
+            var member = await _accountService.GetMemberAsync(login);
 
-            if (member is not null)
+            if (member is not null && member.Password.Equals(PasswordEncryption.EncodePassword(password, member.Salt)))
             {
                 return RedirectToAction("Get", "Members");
             }
@@ -46,19 +47,23 @@ namespace DrinkingBuddies.Mvc.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(string login, string password, string description, bool isAdmin)
         {
-            var isExist = await _accountService.CheckForExistAsync(login);
-            var count = await _accountService.GetElementCountAsync();
+            var member = await _accountService.GetMemberAsync(login);
+            var members = await _accountService.GetAsync();  // TODO или получать количество от репозитория?
 
-            if (count < 3)
+            if (members.Count() < 3)
             {
-                if (!isExist)
+                if (member is null)
                 {
+                    var salt = PasswordEncryption.GenerateSalt();
+
                     AddDto addDto = new AddDto
                     {
                         Name = login,
-                        Password = password,
+                        //Password = password,
+                        Password = PasswordEncryption.EncodePassword(password, salt),
                         Description = description,
-                        IsAdmin = isAdmin
+                        IsAdmin = isAdmin,
+                        Salt = salt
                     };
 
                     await _accountService.AddAsync(addDto);

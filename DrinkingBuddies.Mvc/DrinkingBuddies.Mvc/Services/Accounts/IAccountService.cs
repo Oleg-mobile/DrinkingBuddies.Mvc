@@ -4,9 +4,8 @@ namespace DrinkingBuddies.Mvc.Services.Accounts
 {
     public interface IAccountService
     {
-        Task<AccountDto> GetMemberAsync(string login, string password);
+        Task<AccountDto> GetMemberAsync(string login);
         Task AddAsync(AddDto addDto);
-        Task<bool> CheckForExistAsync(string key);
-        Task<int> GetElementCountAsync();
+        Task<IEnumerable<AccountDto>> GetAsync();
     }
 }

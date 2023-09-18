@@ -11,18 +11,15 @@ namespace DrinkingBuddies.Mvc.Services.Accounts
         {
         }
 
-        public async Task<AccountDto> GetMemberAsync(string login, string password) =>
-            Mapper.Map<AccountDto>(await Repository.GetByAccountAsync(login, password));
+        public async Task<AccountDto> GetMemberAsync(string login) =>
+            Mapper.Map<AccountDto>(await Repository.GetByNameAsync(login));
 
         public async Task AddAsync(AddDto addDto)
         {
             await Repository.AddAsync(Mapper.Map<Member>(addDto));
         }
 
-        public async Task<bool> CheckForExistAsync(string key) => 
-            await Repository.CheckForExistAsync(key);
-
-        public async Task<int> GetElementCountAsync() =>
-            await Repository.GetElementCountAsync();
+        public async Task<IEnumerable<AccountDto>> GetAsync() =>
+            Mapper.Map<IEnumerable<AccountDto>>(await Repository.GetAsync());
     }
 }

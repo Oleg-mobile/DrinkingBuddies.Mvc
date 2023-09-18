@@ -1,8 +1,10 @@
 ﻿using DrinkingBuddies.Mvc.Services.Members;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DrinkingBuddies.Mvc.Controllers
 {
+    [Authorize]
     public class MembersController : Controller
     {
         private readonly IMemberService _service;

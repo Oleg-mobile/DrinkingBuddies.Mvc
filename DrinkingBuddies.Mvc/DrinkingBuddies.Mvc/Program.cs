@@ -3,11 +3,23 @@ using DrinkingBuddies.Domain.Models;
 using DrinkingBuddies.Domain.Repositories;
 using DrinkingBuddies.Mvc.Services.Accounts;
 using DrinkingBuddies.Mvc.Services.Members;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+
+// Нужно ли перебросить на страницу аутентификации
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.Cookie.HttpOnly = true;
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+        options.LoginPath = "/Account/Login";
+        options.SlidingExpiration = true;
+    });
+
 builder.Services.AddTransient<IRepository<Member>, MemberRepository>();  // Внедрение зависимости (где используется это интерфейс, будет подтягиваться эта реализация)
 builder.Services.AddTransient<IMemberService, MemberService>();
 builder.Services.AddTransient<IAccountService, AccountService>();

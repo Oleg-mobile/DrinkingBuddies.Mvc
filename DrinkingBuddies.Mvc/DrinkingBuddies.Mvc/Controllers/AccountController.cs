@@ -1,6 +1,8 @@
 ﻿using DrinkingBuddies.Mvc.Services;
 using DrinkingBuddies.Mvc.Services.Accounts;
 using DrinkingBuddies.Mvc.Services.Accounts.Dto;
+using DrinkingBuddies.Mvc.ViewModels.Account;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -22,63 +24,95 @@ namespace DrinkingBuddies.Mvc.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(string login, string password)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
-            if (string.IsNullOrEmpty(login) && string.IsNullOrEmpty(password))
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("Login");
+                var member = await _accountService.GetMemberAsync(model.Login);
+
+                if (!member.IsAdmin)
+                {
+                    ModelState.AddModelError(string.Empty, "Вход только для администраторов");
+                    return View(model);
+                }
+
+                if (member is not null)
+                {
+                    if (member.Password.Equals(PasswordEncryption.EncodePassword(model.Password, member.Salt)))
+                    {
+                        await Authenticate(model.Login);
+                        return RedirectToAction("Get", "Members");
+                    }
+                }
+                ModelState.AddModelError(string.Empty, "Не правильно введён логин и/или пароль");
             }
-
-            var member = await _accountService.GetMemberAsync(login);
-
-            if (member is not null && member.Password.Equals(PasswordEncryption.EncodePassword(password, member.Salt)))
-            {
-                var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-                identity.AddClaim(new Claim(ClaimTypes.Name, login));
-
-                // 
-
-                return RedirectToAction("Get", "Members");
-            }
-            else
-            {
-                return View();
-            }
+            return View(model);
         }
 
-        public IActionResult Register() 
+        public IActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(string login, string password, string description, bool isAdmin)
+        public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            var member = await _accountService.GetMemberAsync(login);
-
-            if (member is null)
+            if (ModelState.IsValid)
             {
-				var members = await _accountService.GetAsync();  // TODO или получать количество от репозитория?
+                var member = await _accountService.GetMemberAsync(model.Login);
 
-				if (members.Count() < 3)
+                if (member is null)
                 {
+                    var members = await _accountService.GetAsync();  // TODO или получать количество от репозитория?
+                    var admin = members.FirstOrDefault(m => m.IsAdmin == true);  // TODO Async и получать от репозитория?
+
+                    if (members.Count() >= 3)
+                    {
+                        ModelState.AddModelError(string.Empty, "Компания уже собралась");
+                        return View(model);
+                    }
+
+                    if (admin is not null && model.IsAdmin)
+                    {
+                        ModelState.AddModelError(string.Empty, "Админ уже есть");
+                        return View(model);
+                    }
+
                     var salt = PasswordEncryption.GenerateSalt();
 
                     AddDto addDto = new AddDto
                     {
-                        Name = login,
-                        //Password = password,
-                        Password = PasswordEncryption.EncodePassword(password, salt),
-                        Description = description,
-                        IsAdmin = isAdmin,
+                        Name = model.Login,
+                        Password = PasswordEncryption.EncodePassword(model.Password, salt),
+                        Description = model.Description,
+                        IsAdmin = model.IsAdmin,
                         Salt = salt
                     };
 
                     await _accountService.AddAsync(addDto);
+
+                    if (model.IsAdmin)
+                    {
+                        await Authenticate(model.Login);
+                        return RedirectToAction("Get", "Members");
+                    }
+
+                    return RedirectToAction("Index", "Home");
                 }
+
+                ModelState.AddModelError(string.Empty, "Не правильно введён логин и/или пароль");
             }
 
-            return RedirectToAction("Index", "Home");
+            return View(model);
+        }
+
+        private async Task Authenticate(string login)
+        {
+            var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+            identity.AddClaim(new Claim(ClaimTypes.Name, login));
+
+            var principal = new ClaimsPrincipal(identity);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);  // Создаётся cookie для ответа клиенту
         }
     }
 }

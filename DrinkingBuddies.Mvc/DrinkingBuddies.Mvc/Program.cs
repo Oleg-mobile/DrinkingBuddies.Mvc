@@ -10,13 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
-// Нужно ли перебросить на страницу аутентификации
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options =>
+    .AddCookie(options =>  // Настройка аутентификации
     {
         options.Cookie.HttpOnly = true;
         options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
-        options.LoginPath = "/Account/Login";
+        options.LoginPath = "/Account/Login";  // Куда перенаправить анонима, если нужна аутентификация
         options.SlidingExpiration = true;
     });
 
@@ -37,7 +36,7 @@ app.MapControllerRoute(
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication();
+app.UseAuthentication();  // Позволяет установить значение для HttpContext.User
 app.UseAuthorization();
 
 // Статичные файлы из wwwroot

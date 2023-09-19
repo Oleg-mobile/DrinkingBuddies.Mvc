@@ -1,11 +1,21 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <title>Третьим будешь?</title>
+    @await Html.PartialAsync("MetatagsPartial")
+    @await Html.PartialAsync("CssPartial")
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css">
 </head>
 <body>
-    @RenderBody()
+    <div>
+        @await Html.PartialAsync("HeaderPartial")
+    </div>
+
+    <div>
+        @RenderBody()
+    </div>
+
+    <div>
+        @await Html.PartialAsync("FooterPartial")
+    </div>
 </body>
 </html>

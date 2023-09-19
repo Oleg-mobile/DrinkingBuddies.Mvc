@@ -100,7 +100,7 @@ namespace DrinkingBuddies.Mvc.Controllers
                     return RedirectToAction("Index", "Home");
                 }
 
-                ModelState.AddModelError(string.Empty, "Не правильно введён логин и/или пароль");
+                ModelState.AddModelError(string.Empty, "Вы уже зарегистрированы");
             }
 
             return View(model);

@@ -35,7 +35,9 @@ namespace DrinkingBuddies.Domain.Repositories
         public async Task<IEnumerable<Member>> GetAsync() => 
             await _context.Members.ToListAsync();
 
-        public async Task<Member> GetByIdAsync(int id) =>
+        // public IQueryable<Member> GetQuerAsync() => _context.Members; // TODO или так?
+
+        public async Task<Member> GetByIdAsync(int id) =>  // TODO или лучше FirstOrDefaultAsync, или Single...?
             await _context.Members.FindAsync(id);
 
         public async Task<Member> GetByNameAsync(string login) => 

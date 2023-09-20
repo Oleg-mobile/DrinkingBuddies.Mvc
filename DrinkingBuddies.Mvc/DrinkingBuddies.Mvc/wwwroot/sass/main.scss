@@ -1,1 +1,8 @@
-﻿
+﻿@import '_vars';
+
+// Components
+@import 'components/_btn', 'components/_card';
+
+// Sections
+@import 'sections/_header', 'sections/_main', 'sections/_footer', 
+        'sections/_home', 'sections/_members', 'sections/_login', 'sections/_register';

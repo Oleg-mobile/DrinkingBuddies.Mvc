@@ -3,4 +3,7 @@
     border-radius: $border-radius;
     padding: 5px 10px;
     cursor: pointer;
+    color: $text-color;
+    background-color: $back-color;
+    min-width: 100px;
 }

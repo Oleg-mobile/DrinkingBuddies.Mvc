@@ -30,14 +30,14 @@ namespace DrinkingBuddies.Mvc.Controllers
             {
                 var member = await _accountService.GetMemberAsync(model.Login);
 
-                if (!member.IsAdmin)
-                {
-                    ModelState.AddModelError(string.Empty, "Вход только для администраторов");
-                    return View(model);
-                }
-
                 if (member is not null)
                 {
+                    if (!member.IsAdmin)
+                    {
+                        ModelState.AddModelError(string.Empty, "Вход только для администраторов");
+                        return View(model);
+                    }
+
                     if (member.Password.Equals(PasswordEncryption.EncodePassword(model.Password, member.Salt)))
                     {
                         await Authenticate(model.Login);

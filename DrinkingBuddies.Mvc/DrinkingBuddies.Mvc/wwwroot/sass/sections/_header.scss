@@ -1,3 +1,37 @@
-﻿.img {
-    width: 100px;
+﻿.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    width: 100%;
+    background-color: $back-color;
+    color: $text-color;
+    padding:10px;
+
+    &__logo {
+        display: flex;
+        align-items: center;
+        margin-right: 50px;
+    }
+
+    &__img {
+        width: 100px;
+        margin-right: 20px;
+    }
+
+    &__nav {
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__link {
+        text-decoration: none;
+        color: $text-color;
+    }
+
+    a + a {
+        margin-left: 40px;
+    }
 }

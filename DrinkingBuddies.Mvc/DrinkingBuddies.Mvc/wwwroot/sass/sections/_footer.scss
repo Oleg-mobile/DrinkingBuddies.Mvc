@@ -1,1 +1,28 @@
-﻿
+﻿.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 40px;
+    width: 100%;
+    background-color: $back-color;
+    color: $text-color;
+    padding: 10px;
+
+    &__section {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__link-list {
+        list-style: none;
+    }
+
+    &__link {
+        text-decoration: none;
+        color: $text-color;
+    }
+
+    li + li {
+        margin-top: 10px;
+    }
+}

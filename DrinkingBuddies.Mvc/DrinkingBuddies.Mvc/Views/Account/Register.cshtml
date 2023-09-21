@@ -1,41 +1,44 @@
 ﻿@using DrinkingBuddies.Mvc.ViewModels.Account;
 @model RegisterViewModel
 
-    <div class="card">
-        <form asp-controller="Account" asp-action="Register" method="post" class="form">
-            <div asp-validation-summary="ModelOnly" style="color: red"></div>
-            <div>
-                <label asp-for="Login">Логин</label>
-                <input asp-for="Login" type="text" name="login" placeholder="Введите логин" class="input">
-                <span asp-validation-for="Login" style="color: red"></span>
-            </div>
-            <div>
-                <label asp-for="Password">Пароль</label>
-                <input asp-for="Password" type="password" name="password" placeholder="Введите пароль" class="input">
-                <span asp-validation-for="Password" style="color: red"></span>
-            </div>
-            <div>
-                <label asp-for="ConfirmPassword">Повторите пароль</label>
-                <input asp-for="ConfirmPassword" type="password" name="confirmPassword" placeholder="Повторите пароль" class="input">
-                <span asp-validation-for="ConfirmPassword" style="color: red"></span>
-            </div>
-            <div>
-                <label asp-for="Description">Описание</label>
-                <input asp-for="Description" type="text" name="description" placeholder="Описание" class="input">
-            </div>
-            <div>
-                <input asp-for="IsAdmin" type="checkbox" name="isAdmin">
-                Администратор
-            </div>
-            <div>
-                <button type="submit" class="btn">Регистрация</button>
+<div class="card">
+    <form asp-controller="Account" asp-action="Register" method="post" class="register">
+        <div asp-validation-summary="ModelOnly" style="color: red">
+        </div>
+        <div class="input-block">
+            <label asp-for="Login">Логин</label>
+            <input asp-for="Login" type="text" name="login" placeholder="Введите логин" class="input">
+            <span asp-validation-for="Login" style="color: red"></span>
+        </div>
+        <div class="input-block">
+            <label asp-for="Password">Пароль</label>
+            <input asp-for="Password" type="password" name="password" placeholder="Введите пароль" class="input">
+            <span asp-validation-for="Password" style="color: red"></span>
+        </div>
+        <div class="input-block">
+            <label asp-for="ConfirmPassword">Повторите пароль</label>
+            <input asp-for="ConfirmPassword" type="password" name="confirmPassword" placeholder="Повторите пароль" class="input">
+            <span asp-validation-for="ConfirmPassword" style="color: red"></span>
+        </div>
+        <div class="input-block">
+            <label asp-for="Description">Описание</label>
+            <input asp-for="Description" type="text" name="description" placeholder="Описание" class="input">
+        </div>
+        <div>
+            <input asp-for="IsAdmin" type="checkbox" name="isAdmin">
+            Администратор
+        </div>
+        <div class="register__action">
+            <button type="submit" class="btn">
+                Регистрация
+            </button>
 
-                <a asp-area=""
-                   asp-controller="Account"
-                   asp-action="Login"
-                   class="link">
-                    Вход
-                </a>
-            </div>
-        </form>
-    </div>
+            <a asp-area=""
+                asp-controller="Account"
+                asp-action="Login"
+                class="link">
+                Вход
+            </a>
+        </div>
+    </form>
+</div>

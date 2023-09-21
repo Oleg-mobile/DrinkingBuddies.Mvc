@@ -1,5 +1,10 @@
 ﻿@import '_vars';
 
+body {
+    padding: 10px 60px 10px 60px;
+    min-height: 100vh;
+}
+
 // Components
 @import 'components/_btn', 'components/_card', 'components/_input';
 

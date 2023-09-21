@@ -2,19 +2,19 @@
 @model LoginViewModel
 
 <div class="card">
-    <form asp-controller="Account" asp-action="Login" method="post" class="form">
+    <form asp-controller="Account" asp-action="Login" method="post" class="login">
         <div asp-validation-summary="ModelOnly" style="color: red"></div>
-        <div>
+        <div class="input-block">
             <label asp-for="Login">Логин</label>
             <input asp-for="Login" type="text" name="login" placeholder="Введите логин" class="input">
             <span asp-validation-for="Login" style="color: red"></span>
         </div>
-        <div>
+        <div class="input-block">
             <label asp-for="Password">Пароль</label>
             <input asp-for="Password" type="password" name="password" placeholder="Введите пароль" class="input">
             <span asp-validation-for="Password" style="color: red"></span>
         </div>
-        <div>
+        <div class="login__action">
             <button type="submit" class="btn">Войти</button>
         </div>
     </form>

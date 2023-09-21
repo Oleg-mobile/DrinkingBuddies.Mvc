@@ -1,31 +1,21 @@
 ﻿@using DrinkingBuddies.Mvc.ViewModels.Account;
 @model LoginViewModel
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title>Авторизация</title>
-    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css">
-</head>
-<body>
-    <div class="card">
-        <form asp-controller="Account" asp-action="Login" method="post" class="form">
-            <div asp-validation-summary="ModelOnly" style="color: red"></div>
-            <div>
-                <label asp-for="Login">Логин</label>
-                <input asp-for="Login" type="text" name="login" placeholder="Введите логин" class="input">
-                <span asp-validation-for="Login" style="color: red"></span>
-            </div>
-            <div>
-                <label asp-for="Password">Пароль</label>
-                <input asp-for="Password" type="password" name="password" placeholder="Введите пароль" class="input">
-                <span asp-validation-for="Password" style="color: red"></span>
-            </div>
-            <div>
-                <button type="submit" class="btn">Войти</button>
-            </div>
-        </form>
-    </div>
-</body>
-</html>
+<div class="card">
+    <form asp-controller="Account" asp-action="Login" method="post" class="form">
+        <div asp-validation-summary="ModelOnly" style="color: red"></div>
+        <div>
+            <label asp-for="Login">Логин</label>
+            <input asp-for="Login" type="text" name="login" placeholder="Введите логин" class="input">
+            <span asp-validation-for="Login" style="color: red"></span>
+        </div>
+        <div>
+            <label asp-for="Password">Пароль</label>
+            <input asp-for="Password" type="password" name="password" placeholder="Введите пароль" class="input">
+            <span asp-validation-for="Password" style="color: red"></span>
+        </div>
+        <div>
+            <button type="submit" class="btn">Войти</button>
+        </div>
+    </form>
+</div>

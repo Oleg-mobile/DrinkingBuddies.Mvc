@@ -6,16 +6,14 @@
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css">
 </head>
 <body>
-    <div>
-        @await Html.PartialAsync("HeaderPartial")
+    @await Html.PartialAsync("HeaderPartial")
+
+    <div class="container">
+        <div class="main">
+            @RenderBody()
+        </div>
     </div>
 
-    <div class="main">
-        @RenderBody()
-    </div>
-
-    <div>
-        @await Html.PartialAsync("FooterPartial")
-    </div>
+    @await Html.PartialAsync("FooterPartial")
 </body>
 </html>

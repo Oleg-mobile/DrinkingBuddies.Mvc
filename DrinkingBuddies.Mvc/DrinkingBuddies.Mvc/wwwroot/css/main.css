@@ -1,6 +1,10 @@
 ﻿body {
-  padding: 10px 60px 10px 60px;
   min-height: 100vh;
+}
+
+.container {
+  padding: 0 15px;
+  margin: 0 auto;
 }
 
 .btn {
@@ -76,7 +80,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  max-height: 100%;
+  height: 550px;
 }
 
 .footer {

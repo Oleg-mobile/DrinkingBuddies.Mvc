@@ -7,5 +7,7 @@ namespace DrinkingBuddies.Mvc.Services.Accounts
         Task<AccountDto> GetMemberAsync(string login);
         Task AddAsync(AddDto addDto);
         Task<IEnumerable<AccountDto>> GetAsync();
+        Task<bool> IsAdminAsync();
+        Task<int> GetNumberAsync();
     }
 }

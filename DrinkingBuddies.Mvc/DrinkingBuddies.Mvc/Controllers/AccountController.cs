@@ -63,16 +63,17 @@ namespace DrinkingBuddies.Mvc.Controllers
 
                 if (member is null)
                 {
-                    var members = await _accountService.GetAsync();  // TODO или получать количество от репозитория?
-                    var admin = members.FirstOrDefault(m => m.IsAdmin == true);  // TODO Async и получать от репозитория?
+                    var count = await _accountService.GetNumberAsync();
 
-                    if (members.Count() >= 3)
+                    if (count >= 3)
                     {
                         ModelState.AddModelError(string.Empty, "Компания уже собралась");
                         return View(model);
                     }
 
-                    if (admin is not null && model.IsAdmin)
+                    var isAdmin = await _accountService.IsAdminAsync();
+
+                    if (isAdmin && model.IsAdmin)
                     {
                         ModelState.AddModelError(string.Empty, "Админ уже есть");
                         return View(model);

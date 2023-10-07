@@ -7,5 +7,7 @@
         Task<IEnumerable<TEntity>> GetAsync();
         Task<TEntity> GetByIdAsync(int id);
         Task<TEntity> GetByNameAsync(string name);
+        Task<int> GetNumberAsync();
+        Task<bool>  IsAdminAsync();
     }
 }

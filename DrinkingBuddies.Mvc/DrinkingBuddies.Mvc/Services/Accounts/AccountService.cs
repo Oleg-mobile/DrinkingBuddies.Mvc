@@ -21,5 +21,10 @@ namespace DrinkingBuddies.Mvc.Services.Accounts
 
         public async Task<IEnumerable<AccountDto>> GetAsync() =>
             Mapper.Map<IEnumerable<AccountDto>>(await Repository.GetAsync());
+
+        public async Task<bool> IsAdminAsync() =>
+            await Repository.IsAdminAsync();
+        public async Task<int> GetNumberAsync() =>
+            await Repository.GetNumberAsync();
     }
 }

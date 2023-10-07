@@ -35,6 +35,12 @@ namespace DrinkingBuddies.Domain.Repositories
         public async Task<IEnumerable<Member>> GetAsync() => 
             await _context.Members.ToListAsync();
 
+        //public async Task<IEnumerable<Member>> GetAsync()
+        //{
+        //    IQueryable<Member> query = _context.Members;
+        //    return await query.ToListAsync();
+        //}
+
         // public IQueryable<Member> GetQuerAsync() => _context.Members; // TODO или так?
 
         public async Task<Member> GetByIdAsync(int id) =>  // TODO или лучше FirstOrDefaultAsync, или Single...?
@@ -42,5 +48,11 @@ namespace DrinkingBuddies.Domain.Repositories
 
         public async Task<Member> GetByNameAsync(string login) => 
             await _context.Members.FirstOrDefaultAsync(member => member.Name == login.Trim());
+
+        public async Task<int> GetNumberAsync() => 
+            await _context.Members.CountAsync();
+
+        public async Task<bool> IsAdminAsync() =>
+            await _context.Members.AnyAsync(member => member.IsAdmin == true);
     }
 }

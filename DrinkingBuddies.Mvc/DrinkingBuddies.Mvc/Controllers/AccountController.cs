@@ -2,6 +2,7 @@
 using DrinkingBuddies.Mvc.Services.Accounts;
 using DrinkingBuddies.Mvc.Services.Accounts.Dto;
 using DrinkingBuddies.Mvc.ViewModels.Account;
+using DrinkingBuddies.Mvc.ViewModels.Common;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -98,6 +99,12 @@ namespace DrinkingBuddies.Mvc.Controllers
                         return RedirectToAction("Get", "Members");
                     }
 
+                    // TODO сообщить об успешной регистрации
+                    //ViewBag.RegistrationMessage = $"Пользователь {model.Login} зарегистрирован";
+
+                    MessageViewModel messageModel = new MessageViewModel();
+                    messageModel.ViewMessage = $"Пользователь {model.Login} зарегистрирован";
+
                     return RedirectToAction("Index", "Home");
                 }
 
@@ -115,5 +122,12 @@ namespace DrinkingBuddies.Mvc.Controllers
             var principal = new ClaimsPrincipal(identity);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);  // Создаётся cookie для ответа клиенту
         }
-    }
+
+		[HttpPost]
+		public async Task<IActionResult> Exit()
+		{
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+			return RedirectToAction("Index", "Home");
+		}
+	}
 }

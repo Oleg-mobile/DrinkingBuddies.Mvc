@@ -1,4 +1,15 @@
-﻿<div class="card">
+﻿@using DrinkingBuddies.Mvc.ViewModels.Common;
+@model MessageViewModel
+
+<div class="card">
+
+    @if (Model != null && Model.ViewMessage != null)
+    {
+        <span class="message">
+            @Model.ViewMessage;
+        </span>
+    }
+
     <div class="home">
         <label class="home__label">Третьим будешь?</label>
         <form asp-controller="Home" asp-action="Inter" method="post">

@@ -1,4 +1,5 @@
-﻿using DrinkingBuddies.Domain.Models;
+﻿using DrinkingBuddies.Domain.Common;
+using DrinkingBuddies.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DrinkingBuddies.Domain.Repositories
@@ -24,24 +25,29 @@ namespace DrinkingBuddies.Domain.Repositories
 
             if (member is null)
             {
-                // TODO exeption
-                return;
+                // TODO return не нужен? Где отлавливать?
+                throw new EntityNotFoundException(id);
             }
 
             _context.Members.Remove(member);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Member>> GetAsync() => 
-            await _context.Members.ToListAsync();
+        // TODO или так?
 
-        //public async Task<IEnumerable<Member>> GetAsync()
-        //{
-        //    IQueryable<Member> query = _context.Members;
-        //    return await query.ToListAsync();
-        //}
+        //public async Task<IEnumerable<Member>> GetAsync() => 
+        //    await _context.Members.ToListAsync();
 
-        // public IQueryable<Member> GetQuerAsync() => _context.Members; // TODO или так?
+        //public async Task<IEnumerable<Member>> GetAsync1() =>
+        //    await _context.Members.AsQueryable().ToListAsync();
+
+        // public IQueryable<Member> GetQuerAsync() => _context.Members; 
+
+        public async Task<IEnumerable<Member>> GetAsync()
+        {
+            IQueryable<Member> query = _context.Members;
+            return await query.ToListAsync();
+        }
 
         public async Task<Member> GetByIdAsync(int id) =>  // TODO или лучше FirstOrDefaultAsync, или Single...?
             await _context.Members.FindAsync(id);

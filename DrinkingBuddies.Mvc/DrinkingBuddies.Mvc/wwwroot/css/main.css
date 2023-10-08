@@ -116,7 +116,15 @@
   margin-bottom: 20px;
 }
 
-.member td {
+.member {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.member__table {
+  margin-bottom: 20px;
+}
+.member__table td {
   padding: 0 15px;
 }
 

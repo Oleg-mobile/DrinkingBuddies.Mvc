@@ -99,13 +99,13 @@ namespace DrinkingBuddies.Mvc.Controllers
                         return RedirectToAction("Get", "Members");
                     }
 
-                    // TODO сообщить об успешной регистрации
+                    // TODO сообщить об успешной регистрации (GET?)
                     //ViewBag.RegistrationMessage = $"Пользователь {model.Login} зарегистрирован";
 
                     MessageViewModel messageModel = new MessageViewModel();
                     messageModel.ViewMessage = $"Пользователь {model.Login} зарегистрирован";
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home", messageModel);
                 }
 
                 ModelState.AddModelError(string.Empty, "Вы уже зарегистрированы");

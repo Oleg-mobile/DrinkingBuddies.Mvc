@@ -25,7 +25,6 @@ namespace DrinkingBuddies.Domain.Repositories
 
             if (member is null)
             {
-                // TODO return не нужен? Где отлавливать?
                 throw new EntityNotFoundException(id);
             }
 

@@ -19,8 +19,16 @@ namespace DrinkingBuddies.Mvc.Controllers
 
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            await _service.DeleteAsync(id);
-            return RedirectToAction("Get", "Members");
+            try
+            {
+                await _service.DeleteAsync(id);
+                return RedirectToAction("Get", "Members");
+            }
+            catch (Exception ex)
+            {
+                //  редирект на страницу с сообщением об ошибке
+                return RedirectToAction("Index", "Home", new { message = $"Ошибка: {ex.Message} "});
+            }
         }
     }
 }

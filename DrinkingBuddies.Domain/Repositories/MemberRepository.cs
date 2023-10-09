@@ -33,23 +33,10 @@ namespace DrinkingBuddies.Domain.Repositories
             await _context.SaveChangesAsync();
         }
 
-        // TODO или так?
+        public async Task<IEnumerable<Member>> GetAsync() =>
+            await _context.Members.ToListAsync();
 
-        //public async Task<IEnumerable<Member>> GetAsync() => 
-        //    await _context.Members.ToListAsync();
-
-        //public async Task<IEnumerable<Member>> GetAsync1() =>
-        //    await _context.Members.AsQueryable().ToListAsync();
-
-        // public IQueryable<Member> GetQuerAsync() => _context.Members; 
-
-        public async Task<IEnumerable<Member>> GetAsync()
-        {
-            IQueryable<Member> query = _context.Members;
-            return await query.ToListAsync();
-        }
-
-        public async Task<Member> GetByIdAsync(int id) =>  // TODO или лучше FirstOrDefaultAsync, или Single...?
+        public async Task<Member> GetByIdAsync(int id) =>
             await _context.Members.FindAsync(id);
 
         public async Task<Member> GetByNameAsync(string login) => 

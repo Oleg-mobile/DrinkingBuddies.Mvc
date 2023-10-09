@@ -2,7 +2,6 @@
 using DrinkingBuddies.Mvc.Services.Accounts;
 using DrinkingBuddies.Mvc.Services.Accounts.Dto;
 using DrinkingBuddies.Mvc.ViewModels.Account;
-using DrinkingBuddies.Mvc.ViewModels.Common;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -99,13 +98,7 @@ namespace DrinkingBuddies.Mvc.Controllers
                         return RedirectToAction("Get", "Members");
                     }
 
-                    // TODO сообщить об успешной регистрации (GET?)
-                    //ViewBag.RegistrationMessage = $"Пользователь {model.Login} зарегистрирован";
-
-                    MessageViewModel messageModel = new MessageViewModel();
-                    messageModel.ViewMessage = $"Пользователь {model.Login} зарегистрирован";
-
-                    return RedirectToAction("Index", "Home", messageModel);
+                    return RedirectToAction("Index", "Home", new { message = $"Пользователь {model.Login} зарегистрирован" });
                 }
 
                 ModelState.AddModelError(string.Empty, "Вы уже зарегистрированы");
@@ -123,11 +116,11 @@ namespace DrinkingBuddies.Mvc.Controllers
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);  // Создаётся cookie для ответа клиенту
         }
 
-		[HttpPost]
-		public async Task<IActionResult> Exit()
-		{
+        [HttpPost]
+        public async Task<IActionResult> Exit()
+        {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-			return RedirectToAction("Index", "Home");
-		}
-	}
+            return RedirectToAction("Index", "Home");
+        }
+    }
 }

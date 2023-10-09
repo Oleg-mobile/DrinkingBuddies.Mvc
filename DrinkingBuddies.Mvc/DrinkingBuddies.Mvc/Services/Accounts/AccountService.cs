@@ -24,6 +24,7 @@ namespace DrinkingBuddies.Mvc.Services.Accounts
 
         public async Task<bool> IsAdminAsync() =>
             await Repository.IsAdminAsync();
+
         public async Task<int> GetNumberAsync() =>
             await Repository.GetNumberAsync();
     }

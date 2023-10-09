@@ -4,15 +4,18 @@ namespace DrinkingBuddies.Mvc.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
 
         [HttpPost]
         public IActionResult Inter()
         {
             return RedirectToAction("Register", "Account");
+        }
+
+        public IActionResult Index(string? message)
+        {
+            ViewBag.Message = message;
+
+            return View();
         }
     }
 }

@@ -1,12 +1,9 @@
-﻿@using DrinkingBuddies.Mvc.ViewModels.Common;
-@model MessageViewModel
+﻿<div class="card">
 
-<div class="card">
-
-    @if (Model != null && Model.ViewMessage != null)
+    @if (ViewBag.Message != null)
     {
         <span class="message">
-            @Model.ViewMessage;
+            @ViewBag.Message
         </span>
     }
 
